@@ -15,7 +15,7 @@ class Segmentation:
     source_corpus_all_words = brown.words()
     source_corpus_unique_words = set(source_corpus_all_words)
 
-    onechar_word = [u'a', u'I', u'i']
+    onechar_word = ['a', 'I', 'i']
     twochar_word_freq = nltk.FreqDist(
         [word for word in source_corpus_all_words if len(word) == 2])
     twochar_word_list = list(twochar_word_freq.items())
@@ -34,8 +34,8 @@ class Segmentation:
     female_name = names.words('female.txt')
     female_name = [w.lower() for w in female_name]
 
-    month = [u'january', u'february', u'march', u'april', u'may', u'june', u'july', u'august', u'september',
-             u'october', u'november', u'december']
+    month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september',
+             'october', 'november', 'december']
 
     """
     dict源语料库用于生成候选分段(修剪)
@@ -58,16 +58,28 @@ class Segmentation:
     reference_corpus_trigram_num = len(reference_corpus_trigram)
 
     def getAllSegment(self,s):
+        """
+        给出s所有可能分段情况
+        Input: 'anyone'
+        Output: [['any','one'],[anyone]]
+        """
         candidates = self.wordBreak(s)
         result = [nltk.word_tokenize(w) for w in candidates]
         return result
 
     def getBestSegment(self,s):
+        """
+        给出s最佳分段
+        Input: 'anyone'
+        Output: [[anyone]]
+        """
         candidates = self.wordBreak(s)
+        result = []
         if len(candidates) > 1:
-            return nltk.word_tokenize((self.chooseBest(candidates))[0])
+            result = [nltk.word_tokenize((self.chooseBest(candidates))[0])]
         else:
-            return nltk.word_tokenize(candidates[0])
+            result = [nltk.word_tokenize(candidates[0])]
+        return result
 
     def wordBreak(self, s):
         """
@@ -142,5 +154,7 @@ class Segmentation:
 
 if __name__ == '__main__':
     segmentation = Segmentation()
-    seg = segmentation.getBestSegment('anyone')
-    print seg
+    print segmentation.getAllSegment('helloworld')
+    print segmentation.getAllSegment('anyone')
+    print segmentation.getBestSegment('helloworld')
+    print segmentation.getBestSegment('anyone')
