@@ -61,7 +61,7 @@ class Segmentation:
         """
         给出s所有可能分段情况
         Input: 'anyone'
-        Output: [['any','one'],[anyone]]
+        Output: [['any','one'],['anyone']]
         """
         candidates = self.wordBreak(s)
         result = [nltk.word_tokenize(w) for w in candidates]
@@ -71,7 +71,7 @@ class Segmentation:
         """
         给出s最佳分段
         Input: 'anyone'
-        Output: [[anyone]]
+        Output: [['anyone']]
         """
         candidates = self.wordBreak(s)
         result = []
